@@ -54,7 +54,7 @@ st.markdown(
 
 # Agregar el logo
 logo_path = "proyectos\logo2.png"  # Cambia la ruta al archivo de tu logo
-st.sidebar.image(logo_path, use_column_width=True)
+st.sidebar.image(logo_path, use_container_width=True)
 
 # Tu código principal
 st.title("INSTRUMENTO DE VERIFICACIÓN DE SERVICIO FARMACÉUTICO")
