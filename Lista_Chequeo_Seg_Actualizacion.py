@@ -295,7 +295,15 @@ def load_data():
 file_content = load_data()
 
 if file_content is not None:
-    st.write(f"📂 Tamaño del archivo descargado: {len(file_content)} bytes")
+    try:
+        excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
+        df = pd.read_excel(excel_data)  # Intenta leerlo con pandas
+        
+        st.success("✅ Archivo cargado correctamente en pandas.")
+        st.write(df)  # Muestra los datos
+        
+    except Exception as e:
+        st.error(f"⚠ Error al leer el archivo con pandas: {e}")
 else:
     st.warning("No se pudo descargar el archivo.")
     
