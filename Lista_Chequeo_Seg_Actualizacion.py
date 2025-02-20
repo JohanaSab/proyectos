@@ -8,7 +8,6 @@ from datetime import date
 import streamlit as st
 import requests
 from io import BytesIO
-import openpyxl
 import sys
 
 
