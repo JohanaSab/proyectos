@@ -1,4 +1,4 @@
-import streamlit as st
+    import streamlit as st
 import os
 import json
 import tempfile
@@ -278,34 +278,23 @@ def reiniciar_formulario():
 @st.cache_data
 def load_data():
     url = "https://github.com/JohanaSab/proyectos/blob/main/DIRECTORIO_Operadores.xlsx"
-    try:
-        st.write(f"Descargando archivo desde: {url}")
-        response = requests.get(url, stream=True)
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open("temp.xlsx", "wb") as f:
+            f.write(response.content)  # Guarda el archivo temporalmente
 
-        if response.status_code == 200:
-            with open("temp.xlsx", "wb") as f:
-                for chunk in response.iter_content(1024):
-                    f.write(chunk)  # Guarda el archivo en partes
-
-            st.success("Archivo descargado con éxito. Intentando leer...")
-            return pd.read_excel("temp.xlsx")  # Intenta leerlo
-
-        else:
-            st.error(f"Error {response.status_code} al descargar el archivo.")
-            return None
-
-    except Exception as e:
-        st.error(f"⚠ Error inesperado: {e}")
+        return pd.read_excel("temp.xlsx")  # Lee el archivo descargado
+    else:
+        st.error(f"Error al descargar el archivo: {response.status_code}")
         return None
 
 df = load_data()
 
 if df is not None:
-    st.write("Datos cargados:")
-    st.write(df)
+    st.write(df)  # Muestra los datos en Streamlit
 else:
     st.warning("No se pudo cargar la base de datos.")
-
+    
 # Encabezado
 st.title("")
 
