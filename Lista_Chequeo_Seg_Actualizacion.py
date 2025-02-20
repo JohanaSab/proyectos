@@ -5,6 +5,7 @@ import tempfile
 import io
 import pandas as pd
 from datetime import date
+import streamlit as st
 
 # Estilo para tonos azules y logo
 st.markdown(
@@ -52,7 +53,7 @@ st.markdown(
 )
 
 # Agregar el logo
-logo_path = r"C:\Users\josabogal\Desktop\Proyecto\Lista_Cequeo_Seg\logo2.png"  # Cambia la ruta al archivo de tu logo
+logo_path = r"proyectos\logo2.png"  # Cambia la ruta al archivo de tu logo
 st.sidebar.image(logo_path, use_container_width=True)
 
 # Tu código principal
