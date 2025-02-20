@@ -278,8 +278,7 @@ def reiniciar_formulario():
 @st.cache_data
 def load_data():
     url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
-    return pd.read_excel(url)
-
+    
     response = requests.get(url)
     if response.status_code == 200:
         with open("temp.xlsx", "wb") as f:
