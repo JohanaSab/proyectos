@@ -6,6 +6,7 @@ import io
 import pandas as pd
 from datetime import date
 import streamlit as st
+import requests
 
 # Estilo para tonos azules y logo
 st.markdown(
@@ -276,11 +277,25 @@ def reiniciar_formulario():
 # Función para cargar la base de datos desde un archivo Excel
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/DIRECTORIO_Operadores.xlsx"
+    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
     return pd.read_excel(url)
 
-df = load_data()  # Cargar el DataFrame
-st.write(df)
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open("temp.xlsx", "wb") as f:
+            f.write(response.content)  # Guarda el archivo temporalmente
+
+        return pd.read_excel("temp.xlsx")  # Lee el archivo descargado
+    else:
+        st.error(f"❌ Error al descargar el archivo: {response.status_code}")
+        return None
+
+df = load_data()
+
+if df is not None:
+    st.write(df)  # Muestra los datos en Streamlit
+else:
+    st.warning("No se pudo cargar la base de datos.")
 
 # Encabezado
 st.title("")
