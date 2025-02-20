@@ -53,7 +53,7 @@ st.markdown(
 )
 
 # Agregar el logo
-logo_path = "proyectos/logo2.png"  # Cambia la ruta al archivo de tu logo
+logo_path = "logo2.png"  # Cambia la ruta al archivo de tu logo
 st.sidebar.image(logo_path, use_container_width=True)
 
 # Tu código principal
