@@ -280,32 +280,22 @@ def reiniciar_formulario():
 def load_data():
     url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
     
-    st.write(f"📥 Intentando descargar: {url}")
-    
     response = requests.get(url)
-    
     if response.status_code == 200:
-        st.success("✅ Archivo descargado con éxito.")
-        return response.content  # Retorna el contenido en binario
+        excel_data = BytesIO(response.content)
+        return pd.read_excel(excel_data, engine="openpyxl")  # 🔹 Ahora usa openpyxl
     
     else:
         st.error(f"❌ Error al descargar el archivo: {response.status_code}")
         return None
 
-file_content = load_data()
+df = load_data()
 
-if file_content is not None:
-    try:
-        excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
-        df = pd.read_excel(excel_data)  # Intenta leerlo con pandas
-        
-        st.success("✅ Archivo cargado correctamente en pandas.")
-        st.write(df)  # Muestra los datos
-        
-    except Exception as e:
-        st.error(f"⚠ Error al leer el archivo con pandas: {e}")
+if df is not None:
+    st.write("✅ Datos cargados correctamente:")
+    st.write(df)
 else:
-    st.warning("No se pudo descargar el archivo.")
+    st.warning("No se pudo cargar la base de datos.")
     
 # Encabezado
 st.title("")
