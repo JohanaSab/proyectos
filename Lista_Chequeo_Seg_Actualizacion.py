@@ -8,6 +8,7 @@ from datetime import date
 import streamlit as st
 import requests
 from io import BytesIO
+import openpyxl
 
 # Estilo para tonos azules y logo
 st.markdown(
