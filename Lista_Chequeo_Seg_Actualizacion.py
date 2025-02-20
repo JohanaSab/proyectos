@@ -275,21 +275,14 @@ def reiniciar_formulario():
     st.session_state.clear()
 
 # Función para cargar la base de datos desde un archivo Excel
+url = "https://github.com/JohanaSab/proyectos/blob/main/DIRECTORIO_Operadores.xlsx"
+
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/blob/main/DIRECTORIO_Operadores.xlsx"
+    return pd.read_excel(url)  # Lee el archivo descargado
     
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open("temp.xlsx", "wb") as f:
-            f.write(response.content)  # Guarda el archivo temporalmente
-
-        return pd.read_excel("temp.xlsx")  # Lee el archivo descargado
-    else:
-        st.error(f"Error al descargar el archivo: {response.status_code}")
-        return None
-
 df = load_data()
+st.write(df)
 
 if df is not None:
     st.write(df)  # Muestra los datos en Streamlit
