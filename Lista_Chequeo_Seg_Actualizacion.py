@@ -288,12 +288,7 @@ def load_data():
     else:
         st.error(f"Error al descargar el archivo: {response.status_code}")
         return None
-        excel_data = BytesIO(response.content)  # Convierte la respuesta en un objeto BytesIO
-        return pd.read_excel(excel_data)
-    else:
-        st.error(f"Error al descargar el archivo: {response.status_code}")
-        return None
-
+       
 df = load_data()
 
 if df is not None:
