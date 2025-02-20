@@ -281,21 +281,30 @@ def load_data():
     url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
     
     response = requests.get(url)
+    
     if response.status_code == 200:
-        excel_data = BytesIO(response.content)
-        return pd.read_excel(excel_data, engine="openpyxl")  # 🔹 Ahora usa openpyxl
+        st.success("✅ Archivo descargado con éxito.")
+        return response.content  # Retorna el contenido en binario
     
     else:
         st.error(f"❌ Error al descargar el archivo: {response.status_code}")
         return None
 
-df = load_data()
+file_content = load_data()
 
-if df is not None:
-    st.write("✅ Datos cargados correctamente:")
-    st.write(df)
+if file_content is not None:
+    try:
+        excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
+        df = pd.read_excel(excel_data,
+                          engine="openpyxl")  # Intenta leerlo con pandas
+        
+        st.success("✅ Archivo cargado correctamente en pandas.")
+        st.write(df)  # Muestra los datos
+        
+    except Exception as e:
+        st.error(f"⚠ Error al leer el archivo con pandas: {e}")
 else:
-    st.warning("No se pudo cargar la base de datos.")
+    st.warning("No se pudo descargar el archivo.")
     
 # Encabezado
 st.title("")
