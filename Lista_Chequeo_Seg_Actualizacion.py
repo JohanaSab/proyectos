@@ -297,7 +297,7 @@ file_content = load_data()
 if file_content is not None:
     try:
         excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
-        df = pd.read_csv("DIRECTORIO_Operadores.txt", sep=";", encoding ="utf-8", on_bad_lines="skip")  # Intenta leerlo con pandas
+        df = pd.read_csv("DIRECTORIO_Operadores.txt", sep="|", encoding ="utf-8", on_bad_lines="skip")  # Intenta leerlo con pandas
         
         st.success("✅ Archivo cargado correctamente en pandas.")
         st.write(df)  # Muestra los datos
@@ -323,7 +323,7 @@ st.sidebar.write(f"NIT del Operador: {nit_operador}")
 
 # Filtrar farmacias por NIT del operador
 if nit_operador.isdigit():  # Verifica si el NIT es un número válido
-    farmacias_filtradas = df[df["Nit"] == int(nit_operador)]
+    farmacias_filtradas = df[df["Nit"]== int(nit_operador)]
 else:
     farmacias_filtradas = pd.DataFrame()
 
