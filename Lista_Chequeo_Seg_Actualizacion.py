@@ -292,8 +292,7 @@ def load_data():
 df = load_data()
 
 if df is not None:
-    st.write("Datos cargados:")
-    st.write(df)
+    st.write(df)  # Muestra los datos en Streamlit
 else:
     st.warning("No se pudo cargar la base de datos.")
     
