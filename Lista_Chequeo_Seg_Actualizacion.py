@@ -297,10 +297,7 @@ if file_content is not None:
     try:
         excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
         df = pd.read_csv("DIRECTORIO_Operadores.txt", sep="|", encoding ="utf-8", on_bad_lines="skip")  # Intenta leerlo con pandas
-        
-        st.success("✅ Archivo cargado correctamente en pandas.")
-        st.write(df)  # Muestra los datos
-        
+                
     except Exception as e:
         st.error(f"⚠ Error al leer el archivo con pandas: {e}")
 else:
