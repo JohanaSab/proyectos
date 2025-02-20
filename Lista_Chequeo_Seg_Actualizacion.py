@@ -456,7 +456,7 @@ for pregunta in preguntas:
     observacion_actual = st.session_state["responses"][grupo_actual][pregunta].get("observacion","")
 
     #si no hay respuesta mostrar una opcion vacia para obligar la seleccion
-    Opciones = ["Selecciona una opción","Cumple totalmente", "Cumple parcialmente", "Incumple totalmente"]
+    Opciones = ["Selecciona una opción","Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No Aplica"]
 
     # Mostrar la pregunta y permitir selección
     respuesta = st.radio(
