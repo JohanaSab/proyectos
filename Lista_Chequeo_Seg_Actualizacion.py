@@ -280,7 +280,7 @@ def reiniciar_formulario():
 # Función para cargar la base de datos desde un archivo Excel
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
+    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.txt"
     
     response = requests.get(url)
     
@@ -297,7 +297,7 @@ file_content = load_data()
 if file_content is not None:
     try:
         excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
-        df = pd.read_csv("DIRECTORIO_Operadores.xlsx")  # Intenta leerlo con pandas
+        df = pd.read_csv("DIRECTORIO_Operadores.txt", sep="|", encondig ="latin1")  # Intenta leerlo con pandas
         
         st.success("✅ Archivo cargado correctamente en pandas.")
         st.write(df)  # Muestra los datos
