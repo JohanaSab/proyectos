@@ -7,6 +7,7 @@ import pandas as pd
 from datetime import date
 import streamlit as st
 import requests
+from io import BytesIO
 
 # Estilo para tonos azules y logo
 st.markdown(
@@ -278,21 +279,26 @@ def reiniciar_formulario():
 @st.cache_data
 def load_data():
     url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
+    
+    st.write(f"📥 Intentando descargar: {url}")
+    
     response = requests.get(url)
+    
     if response.status_code == 200:
-        excel_data = BytesIO(response.content)  # Convierte la respuesta en un objeto BytesIO
-        return pd.read_excel(excel_data)
+        st.success("✅ Archivo descargado con éxito.")
+        return response.content  # Retorna el contenido en binario
+    
     else:
         st.error(f"❌ Error al descargar el archivo: {response.status_code}")
         return None
 
-df = load_data()
+file_content = load_data()
 
-if df is not None:
-    st.write("✅ Datos cargados:")
-    st.write(df)
+if file_content is not None:
+    st.write(f"📂 Tamaño del archivo descargado: {len(file_content)} bytes")
 else:
-    st.warning("No se pudo cargar la base de datos.")    
+    st.warning("No se pudo descargar el archivo.")
+    
 # Encabezado
 st.title("")
 
