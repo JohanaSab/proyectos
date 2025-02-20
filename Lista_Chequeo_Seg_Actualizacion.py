@@ -7,7 +7,6 @@ import pandas as pd
 from datetime import date
 import streamlit as st
 import requests
-from io import BytesIO
 
 # Estilo para tonos azules y logo
 st.markdown(
