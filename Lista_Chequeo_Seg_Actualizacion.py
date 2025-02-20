@@ -278,8 +278,7 @@ def reiniciar_formulario():
 @st.cache_data
 def load_data():
     url = "https://github.com/JohanaSab/proyectos/blob/main/DIRECTORIO_Operadores.xlsx"
-
-     try:
+    try:
         st.write(f"Descargando archivo desde: {url}")
         response = requests.get(url, stream=True)
 
