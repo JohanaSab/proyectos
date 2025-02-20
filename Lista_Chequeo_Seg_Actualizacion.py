@@ -276,8 +276,8 @@ def reiniciar_formulario():
 # Función para cargar la base de datos desde un archivo Excel
 @st.cache_data
 def load_data():
-    file_path = "DIRECTORIO_Operadores.xlsx"
-    return pd.read_excel(file_path)
+    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
+    return pd.read_excel(url)
 
 df = load_data()  # Cargar el DataFrame
 st.write(df)
