@@ -279,7 +279,8 @@ def load_data():
     file_path = "DIRECTORIO_Operadores.xlsx"
     return pd.read_excel(file_path)
 
-def = load_data()  # Cargar el DataFrame
+df = load_data()  # Cargar el DataFrame
+st.write(df)
 
 # Encabezado
 st.title("")
