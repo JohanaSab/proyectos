@@ -285,7 +285,6 @@ def load_data():
     response = requests.get(url)
     
     if response.status_code == 200:
-        st.success("✅ Archivo descargado con éxito.")
         return response.content  # Retorna el contenido en binario
     
     else:
