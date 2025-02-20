@@ -10,7 +10,6 @@ import requests
 from io import BytesIO
 import openpyxl
 import sys
-sys.path.append(r"C:\Users\josabogal\AppData\Local\Programs\Python\Python313\Lib\site-packages")
 
 # Estilo para tonos azules y logo
 st.markdown(
