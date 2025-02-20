@@ -280,21 +280,19 @@ def load_data():
     url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
     response = requests.get(url)
     if response.status_code == 200:
-        with open("temp.xlsx", "wb") as f:
-            f.write(response.content)  # Guarda el archivo temporalmente
-
-        return pd.read_excel("temp.xlsx")  # Lee el archivo descargado
+        excel_data = BytesIO(response.content)  # Convierte la respuesta en un objeto BytesIO
+        return pd.read_excel(excel_data)
     else:
-        st.error(f"Error al descargar el archivo: {response.status_code}")
+        st.error(f"❌ Error al descargar el archivo: {response.status_code}")
         return None
 
 df = load_data()
 
 if df is not None:
-    st.write(df)  # Muestra los datos en Streamlit
+    st.write("✅ Datos cargados:")
+    st.write(df)
 else:
-    st.warning("No se pudo cargar la base de datos.")
-    
+    st.warning("No se pudo cargar la base de datos.")    
 # Encabezado
 st.title("")
 
