@@ -287,7 +287,7 @@ def load_data():
 
         return pd.read_excel("temp.xlsx")  # Lee el archivo descargado
     else:
-        st.error(f"❌ Error al descargar el archivo: {response.status_code}")
+        st.error(f"Error al descargar el archivo: {response.status_code}")
         return None
 
 df = load_data()
