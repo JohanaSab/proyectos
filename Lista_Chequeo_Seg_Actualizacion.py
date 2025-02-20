@@ -277,7 +277,7 @@ def reiniciar_formulario():
 # Función para cargar la base de datos desde un archivo Excel
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.xlsx"
+    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/DIRECTORIO_Operadores.xlsx"
     
     response = requests.get(url)
     if response.status_code == 200:
