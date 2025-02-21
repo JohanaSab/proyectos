@@ -64,7 +64,7 @@ st.sidebar.image(logo_path, use_container_width=True)
 st.title("INSTRUMENTO DE VERIFICACIÓN DE SERVICIO FARMACÉUTICO")
 
 # Diccionario de operadores y NITs
-operadores = {
+Operadores = {
     "SELECCIONAR": "---------------",
     "COHAN": "890985122",
     "GENHOSPI": "900331412",
@@ -126,8 +126,8 @@ def convertir_fecha(obj):
 
 # Función para guardar el estado actual del formulario
 def guardar_estado():
-    operador = st.session_state["form"].get("Operador", "SELECCIONAR")
-    nit_operador = operadores.get(operador, "DESCONOCIDO")
+    Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
+    nit_operador = Operadores.get(Operador, "DESCONOCIDO")
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
     fecha_auditoria = date.today().isoformat()
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
@@ -258,7 +258,7 @@ def finalizar_formulario():
         for grupo, preguntas in st.session_state["responses"].items():
             for pregunta, respuesta in preguntas.items():
                 file.write(
-                    f"{operador},{nit_operador},"
+                    f"{Operador},{nit_operador},"
                     f"{st.session_state['form'].get('datos_farmacia', '')},"
                     f"{st.session_state['form'].get('Nit_sucursal', '')},"
                     f"{st.session_state['form'].get('ciudad', '')},"
@@ -282,7 +282,7 @@ def reiniciar_formulario():
     st.session_state["Datos Generales"] = {}
     st.session_state["responses"] = {}
     st.session_state["form"] = {}
-    st.session_state["operador"] = "SELECCIONAR"
+    st.session_state["Operador"] = "SELECCIONAR"
     st.session_state.clear()
 
 # Función para cargar la base de datos desde un archivo Excel
@@ -318,10 +318,10 @@ st.title("")
 st.sidebar.header("Datos Generales")
 if "form" not in st.session_state:st.session_state["form"] = {}
 # Seleccionar operador
-operador = st.sidebar.selectbox("Operador", operadores.keys())
+Operador = st.sidebar.selectbox("Operador", Operadores.keys())
 
 # Obtener el NIT del operador seleccionado correctamente
-nit_operador = operadores.get(operador, "DESCONOCIDO")
+nit_operador = Operadores.get(Operador, "DESCONOCIDO")
 st.session_state["form"]["Nit_operador"] = nit_operador
 st.sidebar.write(f"NIT del Operador: {nit_operador}")
 
