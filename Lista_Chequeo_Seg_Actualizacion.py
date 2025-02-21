@@ -187,10 +187,10 @@ def cargar_formulario_por_consecutivo(consecutivo_input):
 
 # Función para finalizar y generar el archivo TXT
 def finalizar_formulario():
-    operador = st.session_state["form"].get("Operador", "SELECCIONAR")
-    nit_operador = operadores.get(operador, "DESCONOCIDO")
+    Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
+    nit_operador = Operadores.get(Operador, "DESCONOCIDO")
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
-    fecha_auditoria = date.today().isoformat()
+    fecha_auditoria = "2025"
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
     filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.txt"
@@ -198,31 +198,39 @@ def finalizar_formulario():
 
   
      # Escribir cabecera
-    Contenido = (
-            "Operador,Nit operador,datos_farmacia,Nit_sucursal,ciudad,direccion,telefono,"
-            "Nivel y Tipo de servicio farmacéutico,Representante legal,Director técnico,"
-            "Auditor 1,Auditor 2,Tipo de Droguería,Fecha de Auditoria,Grupo de Pregunta,Subgrupo de pregunta,Respuesta,Observacion,Valor\n"
-        )
+    Contenido = "Operador|Nit operador|Nombre de la droguería o farmacia|Nit_sucursal|Ciudad|Dirección|Teléfono|"
+    Contenido += "Nivel y Tipo de servicio farmacéutico|Representante legal|Director técnico|"
+    Contenido += "Auditor 1|Auditor 2|Fecha de Auditoria|Grupo de Pregunta|Respuesta|Valor|Observacion|Subgrupo de pregunta\n"
+
+    Operador = st.session_state["form"].get("Operador","")
+    nit_operador = st.session_state["form"].get("Nit_operador", "DESCONOCIDO")
+    nombre_farmacia = st.session_state["form"].get("Nombre")
+    nivel_servicio = st.session_state["form"].get("Nivel y Tipo de servicio farmacéutico", "")
+    representante_legal = st.session_state["form"].get("Representante legal", "")
+    director_tecnico = st.session_state["form"].get("Director técnico", "")
+    auditor_2 = st.session_state["form"].get("Auditor 2", "")
         
      # Escribir datos generales y respuestas
     for grupo, preguntas in st.session_state["responses"].items():
             for pregunta, respuesta in preguntas.items():
                 Contenido +=(
-                    f"{operador},{nit_operador},"
-                    f"{st.session_state['form'].get('datos_farmacia', '')},"
-                    f"{st.session_state['form'].get('Nit_sucursal', '')},"
-                    f"{st.session_state['form'].get('ciudad', '')},"
-                    f"{st.session_state['form'].get('direccion', '')},"
-                    f"{st.session_state['form'].get('telefono', '')},"
-                    f"{st.session_state['form'].get('Nivel y Tipo de servicio farmacéutico', '')},"
-                    f"{st.session_state['form'].get('Representante legal', '')},"
-                    f"{st.session_state['form'].get('Director técnico', '')},"
-                    f"{st.session_state['form'].get('Auditor 1', '')},"
-                    f"{st.session_state['form'].get('Auditor 2', '')},"
-                    f"{st.session_state['form'].get('Fecha de Auditoria', '')},"
-                    f"{st.session_state['form'].get('Observacion', '')},"
-                    f"{grupo},{pregunta},{respuesta['respuesta']},{respuesta['valor']}\n"
+                    f"{Operador}|{nit_operador}|"
+                    f"{farmacia_seleccionada}|"
+                    f"{Nit_sucursal}|"
+                    f"{ciudad}|"
+                    f"{direccion}|"
+                    f"{telefono}|"
+                    f"{st.session_state['form'].get('Nivel y Tipo de servicio farmacéutico', '')}|"
+                    f"{st.session_state['form'].get('Representante legal', '')}|"
+                    f"{st.session_state['form'].get('Director técnico', '')}|"
+                    f"{st.session_state['form'].get('Auditor 1', '')}|"
+                    f"{st.session_state['form'].get('Auditor 2', '')}|"
+                    f"{st.session_state['form'].get('Fecha de Auditoria', '')}|"
+                    f"{grupo}|{respuesta['respuesta']}|{respuesta['valor']}|{observacion_actual}|{pregunta}\n"
                 )
+    st.session_state["consecutivo"] += 1
+    st.success(f"Formulario guardado como: {filename}")    
+            
     # Convertir el contenido a bytes
     Contenido_bytes = Contenido.encode("utf-8")
     
