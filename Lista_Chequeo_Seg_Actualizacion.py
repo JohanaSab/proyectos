@@ -201,7 +201,7 @@ def finalizar_formulario():
     Contenido = (
             "Operador,Nit operador,datos_farmacia,Nit_sucursal,ciudad,direccion,telefono,"
             "Nivel y Tipo de servicio farmacéutico,Representante legal,Director técnico,"
-            "Auditor 1,Auditor 2,Tipo de Droguería,Fecha de Auditoria,Grupo de Pregunta,Subgrupo de pregunta,Respuesta,observacion,Valor\n"
+            "Auditor 1,Auditor 2,Tipo de Droguería,Fecha de Auditoria,Grupo de Pregunta,Subgrupo de pregunta,Respuesta,Observacion,Valor\n"
         )
         
      # Escribir datos generales y respuestas
@@ -220,7 +220,7 @@ def finalizar_formulario():
                     f"{st.session_state['form'].get('Auditor 1', '')},"
                     f"{st.session_state['form'].get('Auditor 2', '')},"
                     f"{st.session_state['form'].get('Fecha de Auditoria', '')},"
-                    f"{st.session_state['form'].get('observacion', '')},"
+                    f"{st.session_state['form'].get('Observacion', '')},"
                     f"{grupo},{pregunta},{respuesta['respuesta']},{respuesta['valor']}\n"
                 )
     # Convertir el contenido a bytes
@@ -243,7 +243,7 @@ def finalizar_formulario():
         file.write(
             "Operador,Nit operador,datos_farmacia,Nit_sucursal,ciudad,direccion,telefono,"
             "Nivel y Tipo de servicio farmacéutico,Representante legal,Director técnico,"
-            "Auditor 1,Auditor 2,Tipo de Droguería,Fecha de Auditoria,Grupo de Pregunta,Subgrupo de pregunta,Respuesta,observacion,Valor\n"
+            "Auditor 1,Auditor 2,Tipo de Droguería,Fecha de Auditoria,Grupo de Pregunta,Subgrupo de pregunta,Respuesta,Observacion,Valor\n"
         )
         
         # Escribir datos generales y respuestas
@@ -262,7 +262,7 @@ def finalizar_formulario():
                     f"{st.session_state['form'].get('Auditor 1', '')},"
                     f"{st.session_state['form'].get('Auditor 2', '')},"
                     f"{st.session_state['form'].get('Fecha de Auditoria', '')},"
-                    f"{st.session_state['form'].get('observacion', '')},"
+                    f"{st.session_state['form'].get('Observacion', '')},"
                     f"{grupo},{pregunta},{respuesta['respuesta']},{respuesta['valor']}\n"
                 )
            
@@ -446,14 +446,14 @@ for pregunta in preguntas:
         st.session_state["responses"][grupo_actual][pregunta] = {
             "respuesta": None,
             "valor": None,
-            "observacion": "",
+            "Observacion": "",
         }
         
        
         
     #respuestas seleccionadas previamente
     respuesta_actual = st.session_state["responses"][grupo_actual][pregunta].get("respuesta","Seleccione una opcion")
-    observacion_actual = st.session_state["responses"][grupo_actual][pregunta].get("observacion","")
+    observacion_actual = st.session_state["responses"][grupo_actual][pregunta].get("Observacion","")
 
     #si no hay respuesta mostrar una opcion vacia para obligar la seleccion
     Opciones = ["Selecciona una opción","Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No Aplica"]
@@ -467,7 +467,7 @@ for pregunta in preguntas:
         )
     
     #Campo de observacion
-    observacion = st.text_area(f"Observacion",
+    Observacion = st.text_area(f"Observacion",
                                value=observacion_actual,
                                key=f"Observacion_{grupo_actual}_{pregunta}",
                                on_change=lambda p=pregunta: actualizar_observacion(grupo_actual,p)
