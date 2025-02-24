@@ -9,7 +9,7 @@ import streamlit as st
 import requests
 from io import BytesIO
 import sys
-
+from docx import Document
 
 # Estilo para tonos azules y logo
 st.markdown(
