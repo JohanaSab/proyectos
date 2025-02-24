@@ -180,6 +180,56 @@ def cargar_formulario_por_consecutivo(consecutivo_input):
             st.session_state["form"]["observacion"] = st.session_state["form"].get("observacion", "")
             st.text_area("Observación", value=st.session_state["form"].get("observacion", ""))
 
+            # Variables adicionales de datos generales
+            operador = st.session_state["form"].get("Operador", "SELECCIONAR")
+            nit_operador = operadores.get(operador, "DESCONOCIDO")
+            farmacia_seleccionada = st.session_state["form"].get("farmacia_seleccionada", "NO SELECCIONADA")
+            Nit_sucursal = farmacias_filtradas.get("Nit_sucursal:", datos_farmacia.get("COD. SUC", "DESCONOCIDO"))
+            ciudad = st.session_state["form"].get("ciudad", "CIUDAD NO ESPECIFICADA")
+            direccion = st.session_state["form"].get("direccion", "DIRECCIÓN NO ESPECIFICADA")
+            telefono = st.session_state["form"].get("telefono", "TELEFONO NO ESPECIFICADO")
+
+            # Mostrar los campos en el formulario
+            st.text_input("Operador", value=operador)
+            st.text_input("Nit del Operador", value=nit_operador)
+            st.text_input("Farmacia Seleccionada", value=farmacia_seleccionada)
+            st.text_input("Nit de la Sucursal", value=Nit_sucursal)
+            st.text_input("Ciudad", value=ciudad)
+            st.text_input("Dirección", value=direccion)
+            st.text_input("Teléfono", value=telefono)
+
+            # Mostrar otros campos del formulario
+            st.text_input("Nivel y Tipo de servicio farmacéutico", value=st.session_state["form"].get("Nivel y Tipo de servicio farmacéutico", ""))
+            st.text_input("Representante legal", value=st.session_state["form"].get("Representante legal", ""))
+            st.text_input("Director técnico", value=st.session_state["form"].get("Director técnico", ""))
+            st.text_input("Auditor 1", value=st.session_state["form"].get("Auditor 1", ""))
+            st.text_input("Auditor 2", value=st.session_state["form"].get("Auditor 2", ""))
+            st.text_input("Fecha de Auditoría", value=st.session_state["form"].get("Fecha de Auditoria", ""))
+
+            # Mostrar la observación en un área de texto
+            st.text_area("Observación", value=st.session_state["form"].get("observacion", ""))
+
+            # Escribir los datos generales y respuestas para la visualización
+            Contenido = ""
+            for grupo, preguntas in st.session_state["responses"].items():
+                for pregunta, respuesta in preguntas.items():
+                    Contenido += (
+                        f"{operador}|{nit_operador}|"
+                        f"{farmacia_seleccionada}|"
+                        f"{Nit_sucursal}|"
+                        f"{ciudad}|"
+                        f"{direccion}|"
+                        f"{telefono}|"
+                        f"{st.session_state['form'].get('Nivel y Tipo de servicio farmacéutico', '')}|"
+                        f"{st.session_state['form'].get('Representante legal', '')}|"
+                        f"{st.session_state['form'].get('Director técnico', '')}|"
+                        f"{st.session_state['form'].get('Auditor 1', '')}|"
+                        f"{st.session_state['form'].get('Auditor 2', '')}|"
+                        f"{st.session_state['form'].get('Fecha de Auditoria', '')}|"
+                    )
+            st.write("Contenido generado:")
+            st.write(Contenido)
+
             st.success(f"Formulario {archivo_a_cargar} cargado correctamente.")
         except Exception as e:
             st.error(f"Error al cargar el archivo: {e}")
