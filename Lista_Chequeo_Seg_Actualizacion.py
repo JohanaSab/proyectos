@@ -246,7 +246,10 @@ def finalizar_formulario():
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
     filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.txt"
+    filename_word = f"Acta_Seguimiento_{Auditor}_{Nit_sucursal}_{consecutivo}.docx"
+    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/"
     file_path = os.path.join(folder_path, filename)
+    file_path_word = os.path.join(folder_path, filename_word)
 
   
      # Escribir cabecera
@@ -261,6 +264,9 @@ def finalizar_formulario():
     representante_legal = st.session_state["form"].get("Representante legal", "")
     director_tecnico = st.session_state["form"].get("Director técnico", "")
     auditor_2 = st.session_state["form"].get("Auditor 2", "")
+    Observacion = st.session_state["form"].get("Observacion", "")
+    tipo_drogueria = st.session_state["form"].get("Tipo de Droguería", "")
+    
         
      # Escribir datos generales y respuestas
     for grupo, preguntas in st.session_state["responses"].items():
@@ -278,7 +284,9 @@ def finalizar_formulario():
                     f"{st.session_state['form'].get('Auditor 1', '')}|"
                     f"{st.session_state['form'].get('Auditor 2', '')}|"
                     f"{st.session_state['form'].get('Fecha de Auditoria', '')}|"
-                    f"{grupo}|{respuesta['respuesta']}|{respuesta['valor']}|{observacion_actual}|{pregunta}\n"
+                    f"{grupo}|{respuesta['respuesta']}|{respuesta['valor']}|"
+                    f"{Observacion}|"
+                    f"{pregunta}\n"
                 )
     st.session_state["consecutivo"] += 1
     st.success(f"Formulario guardado como: {filename}")    
@@ -293,41 +301,103 @@ def finalizar_formulario():
                    mime="text/plain"
                    )
 
-# Crear carpeta si no existe
+    # Crear archivo txt
     os.makedirs(folder_path, exist_ok=True)
-    file_path = os.path.join(folder_path, filename)
+    with open(file_path, 'w', encoding='utf-8') as txt_file:
+        txt_file.write(Contenido)
 
-# Crear contenido del archivo
-    with open(file_path, "w") as file:
-        # Escribir cabecera
-        file.write(
-            "Operador,Nit operador,datos_farmacia,Nit_sucursal,ciudad,direccion,telefono,"
-            "Nivel y Tipo de servicio farmacéutico,Representante legal,Director técnico,"
-            "Auditor 1,Auditor 2,Tipo de Droguería,Fecha de Auditoria,Grupo de Pregunta,Subgrupo de pregunta,Respuesta,Observacion,Valor\n"
-        )
+    # Cargar la plantilla de Word
+    doc = Document(os.path.join(folder_path, "Acta_Seguimiento.docx"))    
+
+    # Rellenar los campos de la plantilla
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                if "OPERADOR" in cell.text.strip():
+                    cell.text = cell.text.replace("OPERADOR", nit_operador)
+                if "NIT_OPERADOR" in cell.text.strip():
+                    cell.text = cell.text.replace("NIT_OPERADOR", nit_operador)
+                if "NOMBRE_FARMACIA" in cell.text.strip():
+                    cell.text = cell.text.replace("NOMBRE_FARMACIA", farmacia_seleccionada)
+                if "NIT_SUCURSAL" in cell.text.strip():
+                    cell.text = cell.text.replace("NIT_SUCURSAL", Nit_sucursal)
+                if "CIUDAD" in cell.text.strip():
+                    cell.text = cell.text.replace("CIUDAD", ciudad)
+                if "DIRECCION" in cell.text.strip():
+                    cell.text = cell.text.replace("DIRECCION", direccion)
+                if "TELEFONO" in cell.text.strip():
+                    cell.text = cell.text.replace("TELEFONO", telefono)
+                if "NIVEL_SERVICIO" in cell.text.strip():
+                    cell.text = cell.text.replace("NIVEL_SERVICIO", nivel_servicio)
+                if "REPRESENTANTE_LEGAL" in cell.text.strip():
+                    cell.text = cell.text.replace("REPRESENTANTE_LEGAL", representante_legal)
+                if "DIRECTOR_TECNICO" in cell.text.strip():
+                    cell.text = cell.text.replace("DIRECTOR_TECNICO", director_tecnico)
+                if "AUDITOR_1" in cell.text.strip():
+                    cell.text = cell.text.replace("AUDITOR_1", Auditor)
+                if "AUDITOR_2" in cell.text.strip():
+                    cell.text = cell.text.replace("AUDITOR_2", auditor_2)
+                if "FECHA_AUDITORIA" in cell.text.strip():
+                    cell.text = cell.text.replace("FECHA_AUDITORIA", fecha_auditoria)
+                if "TIPO_DROGERIA" in cell.text.strip():
+                    cell.text = cell.text.replace("TIPO_DROGERIA", tipo_drogueria)    
+                    
+    # Crear un string que contendrá todo el contenido a insertar en el documento
+    contenido_respuestas = ""
+
+    # Recorrer los grupos y subgrupos de preguntas
+    for grupo, subgrupos in st.session_state["responses"].items():
+        # Primero agregamos el nombre del grupo, que se repetirá solo una vez
+        contenido_respuestas += f"**{grupo}**\n"  # Agregar el grupo en negrita
         
-        # Escribir datos generales y respuestas
-        for grupo, preguntas in st.session_state["responses"].items():
-            for pregunta, respuesta in preguntas.items():
-                file.write(
-                    f"{Operador},{nit_operador},"
-                    f"{st.session_state['form'].get('datos_farmacia', '')},"
-                    f"{st.session_state['form'].get('Nit_sucursal', '')},"
-                    f"{st.session_state['form'].get('ciudad', '')},"
-                    f"{st.session_state['form'].get('direccion', '')},"
-                    f"{st.session_state['form'].get('telefono', '')},"
-                    f"{st.session_state['form'].get('Nivel y Tipo de servicio farmacéutico', '')},"
-                    f"{st.session_state['form'].get('Representante legal', '')},"
-                    f"{st.session_state['form'].get('Director técnico', '')},"
-                    f"{st.session_state['form'].get('Auditor 1', '')},"
-                    f"{st.session_state['form'].get('Auditor 2', '')},"
-                    f"{st.session_state['form'].get('Fecha de Auditoria', '')},"
-                    f"{st.session_state['form'].get('Observacion', '')},"
-                    f"{grupo},{pregunta},{respuesta['respuesta']},{respuesta['valor']}\n"
-                )
-           
+        for subgrupo, respuesta_data in subgrupos.items():
+            # Formatear el texto para cada grupo y subgrupo
+            contenido_respuestas += f"{subgrupo}\n\n"
+
+            # Respuesta
+            respuesta = respuesta_data.get('respuesta', 'sin respuesta')
+            contenido_respuestas += f"**Respuesta:** {respuesta}\n"
+            
+            # Valor (si está presente, mostrarlo; si no, dejar en blanco)
+            valor = respuesta_data.get('valor', '')
+            contenido_respuestas += f"**Valor:** {valor}\n"
+
+            # Observación (si está presente, mostrarla; si no, dejar en blanco)
+            Observacion = respuesta_data.get('Observacion', '')
+            contenido_respuestas += f"**Observación:** {Observacion}\n"
+
+            # Agregar un salto de línea extra después de cada subgrupo
+            contenido_respuestas += "\n"
+
+    # Reemplazar el marcador de respuestas en el documento
+    for p in doc.paragraphs:
+        if "RESPUESTAS_AUDITORIA" in p.text:  # Asegúrate de tener un marcador adecuado
+            p.text = p.text.replace("RESPUESTAS_AUDITORIA", contenido_respuestas)
+            
+            # Limpiar el texto de este párrafo antes de agregarlo
+            p.clear()
+            
+            # Dividir el contenido en partes usando los asteriscos para las negritas
+            partes = contenido_respuestas.split("**")
+            for i, parte in enumerate(partes):
+                # Si la parte es una palabra que debe ir en negrita (índice impar)
+                if i % 2 != 0:
+                    # Agregar la parte en negrita
+                    run = p.add_run(parte)
+                    run.bold = True
+                else:
+                    # Si es texto normal (índice par), añadirlo sin formato
+                    p.add_run(parte)
+            
+    # Guardar el documento modificado
+    doc.save(file_path_word)
+    
+    # Botón de descarga del archivo Word
+    with open(file_path_word, 'rb') as word_file:
+        st.download_button(label="Descargar archivo Word", data=word_file, file_name=filename_word, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
     st.session_state["consecutivo"] += 1
-    st.success(f"Formulario guardado como: {filename}")
+
 
 # Función para reiniciar el formulario
 def reiniciar_formulario():
