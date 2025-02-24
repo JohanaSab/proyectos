@@ -177,6 +177,8 @@ def cargar_formulario_por_consecutivo(consecutivo_input):
             st.session_state["form"] = data.get("form", {})
             st.session_state["responses"] = data.get("responses", {})
             st.session_state["consecutivo"] = data.get("consecutivo", 1)
+            st.session_state["form"]["observacion"] = st.session_state["form"].get("observacion", "")
+            st.text_area("Observación", value=st.session_state["form"].get("observacion", ""))
 
             st.success(f"Formulario {archivo_a_cargar} cargado correctamente.")
         except Exception as e:
