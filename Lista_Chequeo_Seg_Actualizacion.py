@@ -248,6 +248,13 @@ def finalizar_formulario():
     filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.txt"
     filename_word = f"Acta_Seguimiento_{Auditor}_{Nit_sucursal}_{consecutivo}.docx"
     folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
+    response = requests.get(folder_path)
+    if response.status_code == 200:
+        doc = Document(BytesIO(response.content))
+        for paragraph in doc.paragraphs:
+        print(paragraph.text)
+else:
+    print(f"Error al descargar el archivo: {response.status_code}")
     file_path = os.path.join(folder_path, filename)
     file_path_word = os.path.join(folder_path, filename_word)
 
