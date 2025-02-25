@@ -247,7 +247,7 @@ def finalizar_formulario():
     Auditor = st.session_state["form"].get("Auditor 1")
     filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.txt"
     filename_word = f"Acta_Seguimiento_{Auditor}_{Nit_sucursal}_{consecutivo}.docx"
-    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/"
+    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
     file_path = os.path.join(folder_path, filename)
     file_path_word = os.path.join(folder_path, filename_word)
 
