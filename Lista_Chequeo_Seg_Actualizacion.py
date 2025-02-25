@@ -251,10 +251,6 @@ def finalizar_formulario():
     response = requests.get(folder_path)
     if response.status_code == 200:
         doc = Document(BytesIO(response.content))
-        for paragraph in doc.paragraphs:
-        print(paragraph.text)
-else:
-    print(f"Error al descargar el archivo: {response.status_code}")
     file_path = os.path.join(folder_path, filename)
     file_path_word = os.path.join(folder_path, filename_word)
 
