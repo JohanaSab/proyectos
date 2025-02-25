@@ -248,9 +248,17 @@ def finalizar_formulario():
     filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.txt"
     filename_word = f"Acta_Seguimiento_{Auditor}_{Nit_sucursal}_{consecutivo}.docx"
     folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
+
+    # Descargar el archivo .docx desde GitHub
     response = requests.get(folder_path)
     if response.status_code == 200:
+        # Cargar el archivo .docx directamente desde la respuesta
         doc = Document(BytesIO(response.content))
+    else:
+        st.error(f"Error al descargar el archivo: {response.status_code}")
+        return
+
+    # Continuar con el resto de tu lógica
     file_path = os.path.join(folder_path, filename)
     file_path_word = os.path.join(folder_path, filename_word)
 
@@ -307,10 +315,7 @@ def finalizar_formulario():
     # Crear archivo txt
     os.makedirs(folder_path, exist_ok=True)
     with open(file_path, 'w', encoding='utf-8') as txt_file:
-        txt_file.write(Contenido)
-
-    # Cargar la plantilla de Word
-    doc = Document(os.path.join(folder_path, "Acta_Seguimiento.docx"))    
+        txt_file.write(Contenido) 
 
     # Rellenar los campos de la plantilla
     for table in doc.tables:
