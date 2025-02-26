@@ -129,10 +129,11 @@ def guardar_estado():
     Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
     nit_operador = Operadores.get(Operador, "DESCONOCIDO")
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
+    farmacia_seleccionada = farmacias_filtradas.get("farmacia_seleccionada", datos_farmacia["NOMBRE DE LA FARMACIA"])
     fecha_auditoria = date.today().isoformat()
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
-    filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.json"
+    filename = f"Formulario_{farmacia_seleccionada}_{fecha_auditoria}_{consecutivo}.json"
     file_path = os.path.join(folder_path, filename)
     
 
@@ -242,11 +243,12 @@ def finalizar_formulario():
     Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
     nit_operador = Operadores.get(Operador, "DESCONOCIDO")
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
+    farmacia_seleccionada = farmacias_filtradas.get("farmacia_seleccionada", datos_farmacia["NOMBRE DE LA FARMACIA"])
     fecha_auditoria = "2025"
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
-    filename = f"Formulario_{Auditor}_{Nit_sucursal}_{consecutivo}.txt"
-    filename_word = f"Acta_Seguimiento_{Auditor}_{Nit_sucursal}_{consecutivo}.docx"
+    filename = f"Formulario_{farmacia_seleccionada}_{fecha_auditoria}_{consecutivo}.txt"
+    filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}_{fecha_auditoria}_{consecutivo}.docx"
     folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
 
     # Descargar el archivo .docx desde GitHub
