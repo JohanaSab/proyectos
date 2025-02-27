@@ -356,6 +356,7 @@ def finalizar_formulario():
     contenido_observaciones = ""
     
     # Recorrer los grupos y subgrupos de preguntas
+    observaciones_contador = 1
     for grupo, subgrupos in st.session_state["responses"].items():
         # Primero agregamos el nombre del grupo, que se repetirá solo una vez
         contenido_respuestas += f"**{grupo}**\n"  # Agregar el grupo en negrita
