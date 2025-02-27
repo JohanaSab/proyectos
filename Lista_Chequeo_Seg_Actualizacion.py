@@ -133,7 +133,7 @@ def guardar_estado():
     fecha_auditoria = date.today().isoformat()
     consecutivo = f"{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
-    filename = f"Formulario_{farmacia_seleccionada}_{consecutivo}.json"
+    filename = f"Formulario_{farmacia_seleccionada}.json"
     file_path = os.path.join(folder_path, filename)
     
 
@@ -247,8 +247,8 @@ def finalizar_formulario():
     fecha_auditoria = "2025"
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
-    filename = f"Formulario_{farmacia_seleccionada}_{fecha_auditoria}_{consecutivo}.txt"
-    filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}_{fecha_auditoria}_{consecutivo}.docx"
+    filename = f"Formulario_{farmacia_seleccionada}_{consecutivo}.txt"
+    filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}_{consecutivo}.docx"
     folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
 
     # Descargar el archivo .docx desde GitHub
