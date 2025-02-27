@@ -131,7 +131,7 @@ def guardar_estado():
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
     farmacia_seleccionada = farmacias_filtradas.get("farmacia_seleccionada", datos_farmacia["NOMBRE DE LA FARMACIA"])
     fecha_auditoria = date.today().isoformat()
-    consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
+    consecutivo = f"{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
     filename = f"Formulario_{farmacia_seleccionada}_{consecutivo}.json"
     file_path = os.path.join(folder_path, filename)
