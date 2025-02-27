@@ -127,7 +127,6 @@ def convertir_fecha(obj):
 # Función para guardar el estado actual del formulario
 def guardar_estado():
     Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
-    nit_operador = Operadores.get(Operador, "DESCONOCIDO")
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
     farmacia_seleccionada = farmacias_filtradas.get("farmacia_seleccionada", datos_farmacia["NOMBRE DE LA FARMACIA"])
     fecha_auditoria = date.today().isoformat()
