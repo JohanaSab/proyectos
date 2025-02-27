@@ -246,8 +246,8 @@ def finalizar_formulario():
     fecha_auditoria = "2025"
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
     Auditor = st.session_state["form"].get("Auditor 1")
-    filename = f"Formulario_{farmacia_seleccionada}_{consecutivo}.txt"
-    filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}_{consecutivo}.docx"
+    filename = f"Formulario_{farmacia_seleccionada}.txt"
+    filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}.docx"
     folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
 
     # Descargar el archivo .docx desde GitHub
@@ -323,7 +323,7 @@ def finalizar_formulario():
         for row in table.rows:
             for cell in row.cells:
                 if "OPERADOR" in cell.text.strip():
-                    cell.text = cell.text.replace("OPERADOR", nit_operador)
+                    cell.text = cell.text.replace("OPERADOR", Operador)
                 if "NIT_OPERADOR" in cell.text.strip():
                     cell.text = cell.text.replace("NIT_OPERADOR", nit_operador)
                 if "NOMBRE_FARMACIA" in cell.text.strip():
@@ -353,7 +353,8 @@ def finalizar_formulario():
                     
     # Crear un string que contendrá todo el contenido a insertar en el documento
     contenido_respuestas = ""
-
+    contenido_observaciones = ""
+    
     # Recorrer los grupos y subgrupos de preguntas
     for grupo, subgrupos in st.session_state["responses"].items():
         # Primero agregamos el nombre del grupo, que se repetirá solo una vez
@@ -374,6 +375,11 @@ def finalizar_formulario():
             # Observación (si está presente, mostrarla; si no, dejar en blanco)
             Observacion = respuesta_data.get('Observacion', '')
             contenido_respuestas += f"**Observación:** {Observacion}\n"
+
+            # Si hay observación, agregarla a la sección de observaciones
+            if Observacion:
+                contenido_observaciones += f"{observaciones_contador}. {Observacion}\n"
+                observaciones_contador += 1  # Incrementar el contador para la próxima observación                
 
             # Agregar un salto de línea extra después de cada subgrupo
             contenido_respuestas += "\n"
@@ -397,7 +403,12 @@ def finalizar_formulario():
                 else:
                     # Si es texto normal (índice par), añadirlo sin formato
                     p.add_run(parte)
-            
+
+    # Reemplazar el marcador de observaciones en el documento
+    for p in doc.paragraphs:
+        if "OBSERVACIONES_SEGUIMIENTO" in p.text:  # Asegúrate de tener un marcador adecuado
+            p.text = p.text.replace("OBSERVACIONES_SEGUIMIENTO", contenido_observaciones)
+                        
     # Guardar el documento modificado
     doc.save(file_path_word)
     
