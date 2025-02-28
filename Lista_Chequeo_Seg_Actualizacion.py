@@ -509,6 +509,8 @@ grupos = [
     "GESTION DE LA CALIDAD", "APLICATIVOS TÉCNOLOGICOS (SISTEMA)"
 ]
 
+respuestas = {}
+
 grupo_actual = st.sidebar.radio("Navegación", grupos)
 
 #Preguntas detalladas por grupo
@@ -609,6 +611,9 @@ preguntas_por_grupo = {
                                            ]
     }
 
+# Opciones válidas para las respuestas
+opciones_validas = ["Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No aplica"]
+
 # Mostrar preguntas del grupo actual
 st.header(grupo_actual)
 preguntas = preguntas_por_grupo.get(grupo_actual,[])
@@ -664,6 +669,26 @@ for pregunta in preguntas:
             "Observacion": st.session_state[f"Observacion_{grupo_actual}_{pregunta}"]  # Usar el estado guardado
     }
    
+# Función de validación para verificar si todas las respuestas son válidas
+def validar_respuestas():
+    for pregunta, data in st.session_state["responses"][grupo_actual].items():
+        respuesta = data["respuesta"]
+        if respuesta == "Selecciona una opción":
+            st.error(f"Por favor, responde la pregunta: {pregunta}")
+            return False
+        if respuesta not in opciones_validas:
+            st.error(f"La respuesta seleccionada para la pregunta '{pregunta}' no es válida.")
+            return False
+    return True
+
+# Botón para pasar al siguiente grupo o finalizar
+if st.button("Siguiente"):
+    if validar_respuestas():
+        st.success("Todas las preguntas fueron respondidas correctamente.")
+        # Aquí podrías permitir la navegación hacia otro grupo
+    else:
+        st.error("Asegúrate de responder todas las preguntas correctamente.")       
+
 
 # Calcular promedio
     total_valores = sum(
