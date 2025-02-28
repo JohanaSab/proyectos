@@ -691,15 +691,26 @@ if st.button("Siguiente"):
 
 
 # Calcular promedio
-    total_valores = sum(
-        r["valor"] if r ["valor"] is not None else 0 for g in st.session_state["responses"].values() for r in g.values()
+total_valores = sum(
+    r["valor"] if r ["valor"] is not None else 0 for g in st.session_state["responses"].values() for r in g.values()
 )
-num_preguntas = sum(len(g) for g in st.session_state["responses"].values())
+# Calcular el número total de preguntas respondidas (es decir, preguntas que tienen valor asignado)
+num_preguntas_respondidas = sum(
+    1 for g in st.session_state["responses"].values() 
+    for r in g.values() if r["valor"] is not None
+)
 
-#asegurar que el promedio sea sobre 100
-promedio = (total_valores / (num_preguntas*100)) *100 if num_preguntas > 0 else 0
+# Calcular el número total de preguntas posibles (en todas las hojas, sin importar si se han respondido o no)
+total_preguntas_posibles = sum(len(g) for g in st.session_state["responses"].values())
 
-st.sidebar.metric("Promedio Total", round(promedio,2))
+# Asegurarse de que el promedio sea sobre 100, calculando sobre todas las preguntas posibles
+promedio = (total_valores / (total_preguntas_posibles * 100)) * 100 if total_preguntas_posibles > 0 else 0
+
+# Actualizamos el cálculo del promedio en la sesión para que sea persistente
+st.session_state.promedio_total = round(promedio, 2)
+
+# Mostrar el resultado
+st.sidebar.metric("Promedio Total", round(promedio, 2))
 
 # Botones
 st.sidebar.button("Finalizar y Enviar", on_click=finalizar_formulario)
