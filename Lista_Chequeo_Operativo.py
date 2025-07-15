@@ -61,7 +61,7 @@ logo_path = "logo2.png"  # Cambia la ruta al archivo de tu logo
 st.sidebar.image(logo_path, use_container_width=True)
 
 # Tu código principal
-st.title("INSTRUMENTO DE VERIFICACIÓN DE SERVICIO FARMACÉUTICO")
+st.title("AUDITORÍA DE PROCESOS CENTRALIZADOS Y CEDI")
 
 # Diccionario de operadores y NITs
 Operadores = {
@@ -248,7 +248,7 @@ def finalizar_formulario():
     Auditor = st.session_state["form"].get("Auditor 1")
     filename = f"Formulario_{farmacia_seleccionada}.txt"
     filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}.docx"
-    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
+    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento_Operativo.docx"
 
     # Descargar el archivo .docx desde GitHub
     response = requests.get(folder_path)
