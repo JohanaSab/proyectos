@@ -672,6 +672,7 @@ for pregunta in preguntas:
    
 # Función de validación para verificar si todas las respuestas son válidas
 def validar_respuestas():
+    opciones_validas = ["Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No Aplica"]
     for pregunta, data in st.session_state["responses"][grupo_actual].items():
         respuesta = data["respuesta"]
         if respuesta == "Selecciona una opción":
