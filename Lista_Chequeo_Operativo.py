@@ -241,7 +241,7 @@ def cargar_formulario_por_consecutivo(consecutivo_input):
 def finalizar_formulario():
     Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
     nit_operador = Operadores.get(Operador, "DESCONOCIDO")
-    Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
+    Nit_sucursal=farmacias_filtradas.get("Nit_sucursal", datos_farmacia["COD. SUC"])
     farmacia_seleccionada = farmacias_filtradas.get("farmacia_seleccionada", datos_farmacia["NOMBRE DE LA FARMACIA"])
     fecha_auditoria = "2025"
     consecutivo = f"{fecha_auditoria[:4]}_{st.session_state['consecutivo']}"
