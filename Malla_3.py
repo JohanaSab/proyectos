@@ -222,47 +222,37 @@ def main():
 
     archivo = cargar_archivo()
     
-    if archivo and "validado" not in st.session_state:
-        # Cargar archivo
-        df = pd.read_excel(archivo, header=1)  # Cargar el archivo Excel
-        
-        # Verificar y normalizar las columnas
-        df.columns = df.columns.str.strip()  # Eliminar espacios en blanco extra
-        df.columns = df.columns.str.upper()  # Convertir a mayúsculas
-        
-        # Validar el archivo y mostrar errores
-        errores_por_fila, filas_con_errores = validar_dataframe(df)  
-        
-        # Guardar el estado de validación en session_state
-        st.session_state.validado = True
-        st.session_state.df = df
-        st.session_state.errores_por_fila = errores_por_fila  
-        
-        # Mostrar el encabezado
-        st.header(f"Archivo cargado: {archivo.name}")
-        st.write(f"Fecha de validación: {datetime.now().strftime('%Y-%m-%d')}")
-        
-        # Mostrar el resumen de los errores
-        st.write(f"Total de filas con incidencias: {filas_con_errores}")
-        st.write(f"Total de filas sin incidencias: {len(df) - filas_con_errores}")
-
-        # Crear una columna 'ERRORS' con los errores por fila
-        df['ERRORS'] = errores_por_fila
-        
-        # Generar archivo Excel con los errores
-        with st.expander("Descargar archivo con errores"):
-            # Guardar el DataFrame con los errores en un archivo Excel
-            output = "archivo_validado.xlsx"
-            df.to_excel(output, index=False)
+    # Verifica si se ha cargado un archivo y realiza el procesamiento
+    if archivo:
+        try:
+            df = pd.read_excel(archivo)  # Lee el archivo Excel
             
-            # Descargar el archivo Excel
-            with open(output, "rb") as file:
-                st.download_button(
-                    label="Descargar archivo con errores",
-                    data=file,
-                    file_name=output,
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
+            # Normalizar y validar el archivo
+            errores_por_fila, filas_con_errores = validar_dataframe(df)
+            
+            # Mostrar resultados
+            st.write(f"Total de filas con errores: {filas_con_errores}")
+            st.write(f"Total de filas sin errores: {len(df) - filas_con_errores}")
+            
+            df['ERRORS'] = errores_por_fila  # Agregar columna de errores
+            st.write(df)  # Muestra el DataFrame con los errores
+            
+            # Descargar archivo con los errores
+            with st.expander("Descargar archivo con errores"):
+                output = "archivo_validado.xlsx"
+                df.to_excel(output, index=False)
+                
+                with open(output, "rb") as file:
+                    st.download_button(
+                        label="Descargar archivo con errores",
+                        data=file,
+                        file_name=output,
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+        except Exception as e:
+            st.error(f"Hubo un error al procesar el archivo: {e}")
+    else:
+        st.info("Por favor, carga un archivo de Excel para empezar.")
 
 if __name__ == "__main__":
     main()
@@ -307,6 +297,7 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
 
