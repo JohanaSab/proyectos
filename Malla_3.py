@@ -231,7 +231,7 @@ data = {
     "FECHA DE ENTREGA PENDIENTES": ["10/03/2025", "invalid date", "17/03/2025"]
 }
 
-
+    
 def main():
     st.title("Validación Archivo de Dispensación")
 
@@ -282,6 +282,14 @@ def main():
 if __name__ == "__main__":
     main()
 
+        except Exception as e:
+        # Si ocurre un error al leer el archivo
+        st.error(f"Error al cargar el archivo: {e}")
+
+else:
+    # Mostrar un mensaje informando que el archivo aún no ha sido cargado
+    st.info("Por favor, carga un archivo de Excel para continuar.")
+        
 # Crear el panel izquierdo
 st.sidebar.title("Información Importante")
 
@@ -322,4 +330,5 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
