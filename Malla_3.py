@@ -22,6 +22,21 @@ def cargar_archivo():
     archivo = st.file_uploader("Cargar archivo Excel", type=["xlsx", "xls"])
     return archivo
 
+# Llamar a la función para cargar el archivo
+archivo = cargar_archivo()
+
+# Verificar si el archivo ha sido cargado
+if archivo is not None:
+    try:
+        # Intentamos leer el archivo Excel
+        df = pd.read_excel(archivo)
+
+        # Muestra el DataFrame cargado
+        st.write(df)
+
+        # Realiza las validaciones solo si el archivo está correctamente cargado
+        st.write("Archivo cargado correctamente. Ejecutando validaciones...")
+
 def validar_dataframe(df):
     errores_por_fila = []  # Lista para almacenar los errores por fila
     filas_con_errores = 0  # Contador de filas con errores       
@@ -305,4 +320,5 @@ if cargar_archivo is not None:
     st.write("Columnas encontradas:", df.columns.tolist())
     validar_dataframe(df)
 else:
+
     st.warning("Por favor carga un archivo")
