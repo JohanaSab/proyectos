@@ -322,3 +322,4 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
