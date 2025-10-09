@@ -37,6 +37,14 @@ if archivo is not None:
         # Realiza las validaciones solo si el archivo está correctamente cargado
         st.write("Archivo cargado correctamente. Ejecutando validaciones...")
 
+    except Exception as e:
+        # Si ocurre un error al leer el archivo
+        st.error(f"Error al cargar el archivo: {e}")
+
+else:
+    # Mostrar un mensaje informando que el archivo aún no ha sido cargado
+    st.info("Por favor, carga un archivo de Excel para continuar.")
+
 def validar_dataframe(df):
     errores_por_fila = []  # Lista para almacenar los errores por fila
     filas_con_errores = 0  # Contador de filas con errores       
@@ -281,14 +289,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-        except Exception as e:
-        # Si ocurre un error al leer el archivo
-        st.error(f"Error al cargar el archivo: {e}")
-
-else:
-    # Mostrar un mensaje informando que el archivo aún no ha sido cargado
-    st.info("Por favor, carga un archivo de Excel para continuar.")
         
 # Crear el panel izquierdo
 st.sidebar.title("Información Importante")
@@ -330,5 +330,6 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
