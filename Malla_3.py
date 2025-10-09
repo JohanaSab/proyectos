@@ -25,26 +25,6 @@ def cargar_archivo():
 # Llamar a la función para cargar el archivo
 archivo = cargar_archivo()
 
-# Verificar si el archivo ha sido cargado
-if archivo is not None:
-    try:
-        # Intentamos leer el archivo Excel
-        df = pd.read_excel(archivo)
-
-        # Muestra el DataFrame cargado
-        st.write(df)
-
-        # Realiza las validaciones solo si el archivo está correctamente cargado
-        st.write("Archivo cargado correctamente. Ejecutando validaciones...")
-
-    except Exception as e:
-        # Si ocurre un error al leer el archivo
-        st.error(f"Error al cargar el archivo: {e}")
-
-else:
-    # Mostrar un mensaje informando que el archivo aún no ha sido cargado
-    st.info("Por favor, carga un archivo de Excel para continuar.")
-
 def validar_dataframe(df):
     errores_por_fila = []  # Lista para almacenar los errores por fila
     filas_con_errores = 0  # Contador de filas con errores       
@@ -330,6 +310,7 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
 
