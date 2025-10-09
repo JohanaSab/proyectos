@@ -22,9 +22,6 @@ def cargar_archivo():
     archivo = st.file_uploader("Cargar archivo Excel", type=["xlsx", "xls"])
     return archivo
 
-# Llamar a la función para cargar el archivo
-archivo = cargar_archivo()
-
 def validar_dataframe(df):
     errores_por_fila = []  # Lista para almacenar los errores por fila
     filas_con_errores = 0  # Contador de filas con errores       
@@ -310,6 +307,7 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
 
