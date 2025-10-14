@@ -209,6 +209,8 @@ def cargar_formulario_por_consecutivo(consecutivo_input):
 def finalizar_formulario():
     Operador = st.session_state["form"].get("Operador", "SELECCIONAR")
     nit_operador = Operadores.get(Operador, "DESCONOCIDO")
+    # Recuperar datos de la farmacia desde session_state
+    datos_farmacia = st.session_state.get("datos_farmacia", {})
     Nit_sucursal=farmacias_filtradas.get("Nit_sucursal:", datos_farmacia["COD. SUC"])
     farmacia_seleccionada = farmacias_filtradas.get("farmacia_seleccionada", datos_farmacia["NOMBRE DE LA FARMACIA"])
     fecha_auditoria = "2025"
@@ -448,6 +450,9 @@ if not farmacias_filtradas.empty:
 
     # Obtener datos de la farmacia seleccionada
     datos_farmacia = farmacias_filtradas[farmacias_filtradas["NOMBRE DE LA FARMACIA"] == farmacia_seleccionada].iloc[0]
+
+    # Guardar en session_state para usar en otras funciones
+    st.session_state["datos_farmacia"] = datos_farmacia
 
     # Campos prellenados pero editables
     Nit_sucursal = st.sidebar.text_input("Nit_sucursal:", datos_farmacia["COD. SUC"])
