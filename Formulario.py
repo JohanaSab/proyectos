@@ -63,11 +63,11 @@ st.title("INSTRUMENTO DE VERIFICACIÓN DE SERVICIO")
 # Diccionario de operadores y NITs
 Operadores = {
     "SELECCIONAR": "---------------",
-    "GESTOR1": "1",
-    "GESTOR2": "2",
-    "GESTOR3": "3",
-    "GESTOR4": "4",
-    "GESTOR5": "5",
+    "GESTOR1": "A",
+    "GESTOR2": "B",
+    "GESTOR3": "C",
+    "GESTOR4": "D",
+    "GESTOR5": "E",
 }
 
 # Inicializar variables de sesión
