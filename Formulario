@@ -216,7 +216,7 @@ def finalizar_formulario():
     Auditor = st.session_state["form"].get("Auditor 1")
     filename = f"Formulario_{farmacia_seleccionada}.txt"
     filename_word = f"Acta_Seguimiento_{farmacia_seleccionada}.docx"
-    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento.docx"
+    folder_path = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/Acta_Seguimiento_PUBLICO.docx"
 
     # Descargar el archivo .docx desde GitHub
     response = requests.get(folder_path)
