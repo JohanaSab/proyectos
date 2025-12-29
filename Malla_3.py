@@ -19,7 +19,7 @@ nit_proveedor_validos = [
 ]
 
 def cargar_archivo():
-    archivo = st.file_uploader("Cargar archivo Excel", type=["xlsx", "xls"])
+    archivo = st.file_uploader("Cargar archivo Excel", type=["xlsx", "xls", "xlsb"])
     return archivo
 
 def validar_dataframe(df):
@@ -297,6 +297,7 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
 
