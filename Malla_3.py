@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 import re
 from typing import Dict
+import pyxlsb
 
 # Definir los criterios predefinidos
 tipo_documento = ["RC", "TI", "CC", "SC", "PT", "PE", "PA", "MS", "CN", "CE", "CD", "AS"]
@@ -297,6 +298,7 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
 
