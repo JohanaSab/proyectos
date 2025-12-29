@@ -23,6 +23,14 @@ def cargar_archivo():
     archivo = st.file_uploader("Cargar archivo Excel", type=["xlsx", "xls", "xlsb"])
     return archivo
 
+def cargar_dataframe(archivo):
+    # Si es un archivo .xlsb, usar pyxlsb como motor
+    if archivo.name.endswith(".xlsb"):
+        df = pd.read_excel(archivo, engine="pyxlsb")
+    else:
+        df = pd.read_excel(archivo)  # Para .xlsx o .xls, usa el motor por defecto de Pandas
+    return df
+
 def validar_dataframe(df):
     errores_por_fila = []  # Lista para almacenar los errores por fila
     filas_con_errores = 0  # Contador de filas con errores       
@@ -298,6 +306,7 @@ if cargar_archivo is not None:
 else:
 
     st.warning("Por favor carga un archivo")
+
 
 
 
