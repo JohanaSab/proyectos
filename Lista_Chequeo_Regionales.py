@@ -61,7 +61,7 @@ logo_path = "logo2.png"  # Cambia la ruta al archivo de tu logo
 st.sidebar.image(logo_path, use_container_width=True)
 
 # Tu código principal
-st.title("AUDITORÍA DE PROCESOS CENTRALIZADOS Y CEDI")
+st.title("INSTRUMENTO DE VERIFICACIÓN DE SERVICIO FARMACÉUTICO_REGIONALES")
 
 # Diccionario de operadores y NITs
 Operadores = {
