@@ -464,7 +464,7 @@ if not farmacias_filtradas.empty:
     Nit_sucursal = st.sidebar.text_input("Nit_sucursal:", datos_farmacia["COD. SUC"])
     ciudad = st.sidebar.text_input("Ciudad:", datos_farmacia["CIUDAD / MUNICIPIO"])
     direccion = st.sidebar.text_input("Dirección:", datos_farmacia["DIRECCIÓN DE CONTACTO"])
-    telefono = st.sidebar.text_input("Teléfono:", datos_farmacia["TELÉFONO DE CONTACTO"])
+    telefono = st.sidebar.text_input("Teléfono:", datos_farmacia["TELEFONO DE CONTACTO"])
 else:
     st.sidebar.warning("No se encontraron farmacias para este operador.")
 
