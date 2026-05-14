@@ -70,7 +70,7 @@ Operadores = {
     "GENHOSPI": "900331412",
     "INSUMEDIC": "900716566",
     "MEDICINA Y TECNOLOGIA EN SALUD MYT": "900057926",
-    "SUMINISTROS Y DOTACIONES": "802000608",
+    "COLSUBSIDIO": "860007336",
     "DISFARMA": "900580962",
     "CRUZ VERDE": "800149695",
     "DISCOLMETS": "828002423",
@@ -410,7 +410,7 @@ def reiniciar_formulario():
 # Función para cargar la base de datos desde un archivo Excel
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores.txt"
+    url = "https://raw.githubusercontent.com/JohanaSab/proyectos/main/DIRECTORIO_Operadores_Regionales.txt"
     
     response = requests.get(url)
     
@@ -426,7 +426,7 @@ file_content = load_data()
 if file_content is not None:
     try:
         excel_data = BytesIO(file_content)  # Convierte los bytes en un archivo en memoria
-        df = pd.read_csv("DIRECTORIO_Operadores.txt", sep="|", encoding ="utf-8", on_bad_lines="skip")  # Intenta leerlo con pandas
+        df = pd.read_csv("DIRECTORIO_Operadores_Regionales.txt", sep="|", encoding ="utf-8", on_bad_lines="skip")  # Intenta leerlo con pandas
                 
     except Exception as e:
         st.error(f"⚠ Error al leer el archivo con pandas: {e}")
@@ -547,7 +547,7 @@ preguntas_por_grupo = {
     }
 
 # Opciones válidas para las respuestas
-opciones_validas = ["Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No aplica"]
+opciones_validas = ["Cumple totalmente", "Incumple totalmente", "No aplica"]
 
 # Mostrar preguntas del grupo actual
 st.header(grupo_actual)
@@ -572,7 +572,7 @@ for pregunta in preguntas:
     observacion_actual = st.session_state["responses"][grupo_actual][pregunta].get("Observacion","")
 
     #si no hay respuesta mostrar una opcion vacia para obligar la seleccion
-    Opciones = ["Selecciona una opción","Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No Aplica"]
+    Opciones = ["Selecciona una opción","Cumple totalmente", "Incumple totalmente", "No Aplica"]
 
     # Mostrar la pregunta y permitir selección
     respuesta = st.radio(
@@ -595,7 +595,7 @@ for pregunta in preguntas:
         
     # Guardar respuesta y valor
     if respuesta != "Selecciona una opción":
-            valor = 100 if respuesta == "Cumple totalmente" else 50 if respuesta == "Cumple parcialmente" else 0
+            valor = 100 if respuesta == "Cumple totalmente" else 0
             if grupo_actual not in st.session_state["responses"]:
                 st.session_state["responses"][grupo_actual] = {}
             st.session_state["responses"][grupo_actual][pregunta] = {
@@ -606,7 +606,7 @@ for pregunta in preguntas:
    
 # Función de validación para verificar si todas las respuestas son válidas
 def validar_respuestas():
-    opciones_validas = ["Cumple totalmente", "Cumple parcialmente", "Incumple totalmente", "No Aplica"]
+    opciones_validas = ["Cumple totalmente", "Incumple totalmente", "No Aplica"]
     for pregunta, data in st.session_state["responses"][grupo_actual].items():
         respuesta = data["respuesta"]
         if respuesta == "Selecciona una opción":
